@@ -19,7 +19,13 @@ spec:
           ports:
             - containerPort: 443
               protocol: TCP
+          volumeMounts:
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
       restartPolicy: Always
+      volumes:
+        - name: nginx-cache
+          emptyDir: {}
   test: false
   triggers:
     - type: ConfigChange
