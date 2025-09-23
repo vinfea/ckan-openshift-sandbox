@@ -1,0 +1,33 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: nginx
+  template:
+    metadata:
+      labels:
+        io.kompose.service: nginx
+    spec:
+      containers:
+        - image: ' '
+          name: nginx
+          ports:
+            - containerPort: 443
+              protocol: TCP
+      restartPolicy: Always
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - nginx
+        from:
+          kind: ImageStreamTag
+          name: nginx:latest
+      type: ImageChange

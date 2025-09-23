@@ -1,0 +1,40 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: datapusher
+  name: datapusher
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: datapusher
+  template:
+    metadata:
+      labels:
+        io.kompose.service: datapusher
+    spec:
+      containers:
+        - image: ' '
+          livenessProbe:
+            exec:
+              command:
+                - wget
+                - -qO
+                - /dev/null
+                - http://localhost:8800
+            failureThreshold: 3
+            periodSeconds: 60
+            timeoutSeconds: 10
+          name: datapusher
+      restartPolicy: Always
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - datapusher
+        from:
+          kind: ImageStreamTag
+          name: datapusher:0.0.21
+      type: ImageChange

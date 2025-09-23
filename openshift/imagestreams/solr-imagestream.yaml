@@ -1,0 +1,16 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    io.kompose.service: solr
+  name: solr
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: ckan/ckan-solr:2.10-solr9
+      name: 2.10-solr9
+      referencePolicy:
+        type: ""

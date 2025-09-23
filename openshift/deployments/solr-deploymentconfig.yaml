@@ -1,0 +1,46 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: solr
+  name: solr
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: solr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: solr
+    spec:
+      containers:
+        - image: ' '
+          livenessProbe:
+            exec:
+              command:
+                - wget
+                - -qO
+                - /dev/null
+                - http://localhost:8983/solr/
+          name: solr
+          volumeMounts:
+            - mountPath: /var/solr
+              name: solr-data
+      restartPolicy: Always
+      volumes:
+        - name: solr-data
+          persistentVolumeClaim:
+            claimName: solr-data
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - solr
+        from:
+          kind: ImageStreamTag
+          name: solr:2.10-solr9
+      type: ImageChange

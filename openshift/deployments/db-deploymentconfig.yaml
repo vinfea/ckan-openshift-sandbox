@@ -1,0 +1,66 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: db
+  name: db
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: db
+    spec:
+      containers:
+        - env:
+            - name: CKAN_DB
+              value: ckandb
+            - name: CKAN_DB_PASSWORD
+              value: ckandbpassword
+            - name: CKAN_DB_USER
+              value: ckandbuser
+            - name: DATASTORE_DB
+              value: datastore
+            - name: DATASTORE_READONLY_PASSWORD
+              value: datastore
+            - name: DATASTORE_READONLY_USER
+              value: datastore_ro
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+          image: ' '
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -U
+                - postgres
+                - -d
+                - postgres
+          name: db
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pg-data
+      restartPolicy: Always
+      volumes:
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: pg-data
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - db
+        from:
+          kind: ImageStreamTag
+          name: db:latest
+      type: ImageChange

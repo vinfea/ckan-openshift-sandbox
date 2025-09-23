@@ -1,0 +1,62 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    io.kompose.service: ckan
+  name: ckan
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: ckan
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: ckan
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: env
+          image: ' '
+          livenessProbe:
+            exec:
+              command:
+                - wget
+                - -qO
+                - /dev/null
+                - http://localhost:5000/api/action/status_show
+            failureThreshold: 3
+            periodSeconds: 60
+            timeoutSeconds: 10
+          name: ckan
+          volumeMounts:
+            - mountPath: /var/lib/ckan
+              name: ckan-storage
+            - mountPath: /root/.cache/pip
+              name: pip-cache
+            - mountPath: /usr/lib/python3.10/site-packages
+              name: site-packages
+      restartPolicy: Always
+      volumes:
+        - name: ckan-storage
+          persistentVolumeClaim:
+            claimName: ckan-storage
+        - name: pip-cache
+          persistentVolumeClaim:
+            claimName: pip-cache
+        - name: site-packages
+          persistentVolumeClaim:
+            claimName: site-packages
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - ckan
+        from:
+          kind: ImageStreamTag
+          name: ckan:latest
+      type: ImageChange
