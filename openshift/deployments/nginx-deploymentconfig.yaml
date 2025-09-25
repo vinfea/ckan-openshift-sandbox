@@ -17,7 +17,7 @@ spec:
         - image: ' '
           name: nginx
           ports:
-            - containerPort: 443
+            - containerPort: 8443
               protocol: TCP
           volumeMounts:
             - name: nginx-cache
@@ -35,5 +35,5 @@ spec:
           - nginx
         from:
           kind: ImageStreamTag
-          name: nginx:latest
+          name: nginx:1.25
       type: ImageChange

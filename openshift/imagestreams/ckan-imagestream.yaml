@@ -10,7 +10,7 @@ spec:
   tags:
     - from:
         kind: DockerImage
-        name: ckan
-      name: latest
+        name: ckan/ckan-base:2.11
+      name: "2.11"
       referencePolicy:
         type: ""

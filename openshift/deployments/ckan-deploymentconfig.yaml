@@ -58,5 +58,5 @@ spec:
           - ckan
         from:
           kind: ImageStreamTag
-          name: ckan:latest
+          name: ckan:2.11
       type: ImageChange

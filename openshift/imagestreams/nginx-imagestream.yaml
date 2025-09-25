@@ -10,7 +10,7 @@ spec:
   tags:
     - from:
         kind: DockerImage
-        name: nginx
-      name: latest
+        name: nginx:1.25
+      name: "1.25"
       referencePolicy:
         type: ""

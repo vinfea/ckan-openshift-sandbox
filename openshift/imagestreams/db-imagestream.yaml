@@ -10,7 +10,7 @@ spec:
   tags:
     - from:
         kind: DockerImage
-        name: db
-      name: latest
+        name: postgres:14
+      name: "14"
       referencePolicy:
         type: ""
