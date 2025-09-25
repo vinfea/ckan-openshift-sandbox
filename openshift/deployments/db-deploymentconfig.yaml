@@ -35,6 +35,8 @@ spec:
               value: postgres
             - name: POSTGRES_USER
               value: postgres
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           image: ' '
           livenessProbe:
             exec:
@@ -46,7 +48,7 @@ spec:
                 - postgres
           name: db
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /var/lib/postgresql/data/pgdata
               name: pg-data
       restartPolicy: Always
       volumes:
