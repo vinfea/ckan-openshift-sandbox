@@ -1,0 +1,19 @@
+PLAN:
+
+Goal 1) Get minimal ckan deployment running in Openshift sandbox
+- ckan-base
+- postgres db
+- solr (for searching)
+
+Start with ckan-docker repo:
+https://github.com/ckan/ckan-docker/tree/master
+
+STEPS:
+- Go through Dockerfile for each container (if applicable)
+- Customize if needed
+- Also reference docker-compose.yml
+- Build new images and push to quay repo, located here:
+https://quay.io/repository/akatsuki/ckan-on-openshift
+- Write Kubernetes config files (YAMLs) to pull those images and configure
+the components to run within the Openshift sandbox
+- Pray it works
