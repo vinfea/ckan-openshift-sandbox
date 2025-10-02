@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ckan
+  template:
+    metadata:
+      labels:
+        app: ckan
+    spec:
+      containers:
+        - name: ckan
+          image: <your-quay-username>/ckan-base:2.11
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: ckan-config
+            - secretRef:
+                name: ckan-secret
+          volumeMounts:
+            - name: ckan-storage
+              mountPath: /var/lib/ckan
+      volumes:
+        - name: ckan-storage
+          persistentVolumeClaim:
+            claimName: ckan-storage

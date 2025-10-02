@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan-test
+  labels:
+    app: ckan-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ckan-test
+  template:
+    metadata:
+      labels:
+        app: ckan-test
+    spec:
+      containers:
+        - name: ckan
+          image: quay.io/incineroar/ckan-openshift-sandbox:1.0
+          imagePullPolicy: Always

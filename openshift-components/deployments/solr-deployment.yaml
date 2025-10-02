@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solr
+  template:
+    metadata:
+      labels:
+        app: solr
+    spec:
+      containers:
+        - name: solr
+          image: <your-quay-username>/ckan-solr:2.10-solr9
+          ports:
+            - containerPort: 8983
+          volumeMounts:
+            - name: solr-data
+              mountPath: /var/solr
+      volumes:
+        - name: solr-data
+          persistentVolumeClaim:
+            claimName: solr-data

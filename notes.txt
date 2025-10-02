@@ -12,8 +12,26 @@ STEPS:
 - Go through Dockerfile for each container (if applicable)
 - Customize if needed
 - Also reference docker-compose.yml
-- Build new images and push to quay repo, located here:
-https://quay.io/repository/akatsuki/ckan-on-openshift
+- Build new images and push to quay repos (one repo per application)
 - Write Kubernetes config files (YAMLs) to pull those images and configure
 the components to run within the Openshift sandbox
-- Pray it works
+
+KUBERNETES COMPONENTS:
+- 3 Deployments (--> 3 images, 3 quay repositories)
+    - ckan-base
+    - postgres db
+    - solr
+- 3 services
+    - ckan (internal service, exposed via route later)
+    - postgres db (internal service)
+    - solr (internal service)
+- 3 persistent volume claims
+    - ckan-storage (/var/lib/ckan)
+    - pg-data (/var/lib/postgresql/data)
+    - solr-data (/var/solr)
+- 1 config map
+    - for non-sensitive values in .env
+- 1 secret
+    - for sensitive values in .env
+- 1 route
+    - For external access
