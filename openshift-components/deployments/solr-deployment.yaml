@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: solr
-          image: <your-quay-username>/ckan-solr:2.10-solr9
+          image: quay.io/incineroar/ckan-solr:1.0
           ports:
             - containerPort: 8983
           volumeMounts:

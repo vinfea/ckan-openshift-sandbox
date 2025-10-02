@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: <your-quay-username>/ckan-postgres:latest
+          image: quay.io/incineroar/ckan-postgres:1.0
           ports:
             - containerPort: 5432
           envFrom:
@@ -22,7 +22,7 @@ spec:
                 name: ckan-secret
           volumeMounts:
             - name: postgres-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
