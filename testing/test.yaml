@@ -16,5 +16,5 @@ spec:
     spec:
       containers:
         - name: ckan
-          image: quay.io/incineroar/ckan-openshift-sandbox:1.0
+          image: quay.io/incineroar/incineroar-test:1.0
           imagePullPolicy: Always
