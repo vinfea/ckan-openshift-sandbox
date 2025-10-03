@@ -12,6 +12,10 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
 USER root
 
+RUN mkdir -p /stupid/test/incineroar \
+&& chown -R root:0 /stupid/test/incineroar \
+&& chmod -R g+rwX /stupid/test/incineroar
+
 RUN chgrp -R 0 ${APP_DIR} && \
     chmod -R g=u ${APP_DIR}
 

@@ -3,10 +3,10 @@ kind: ConfigMap
 metadata:
   name: ckan-config
 data:
-  CKAN_PORT_HOST: "5000"
   POSTGRES_HOST: "db"
   CKAN_SQLALCHEMY_URL: "postgresql://ckandbuser:ckandbpassword@db/ckandb"
   TEST_CKAN_SQLALCHEMY_URL: "postgres://ckan:ckan@db/ckan_test"
+  TEST_CKAN_SQLALCHEMY_URL: "postgres://ckan:ckan@postgres/ckan_test"
   USE_HTTPS_FOR_DEV: "false"
   CKAN_VERSION: "2.10.0"
   CKAN_SITE_ID: "default"

@@ -35,3 +35,6 @@ KUBERNETES COMPONENTS:
     - for sensitive values in .env
 - 1 route
     - For external access
+
+NOTES TO SELF
+- Add script to docker-entrypoint.d (for ckan) to overwrite localhost with db
