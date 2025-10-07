@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ckan
-          image: quay.io/incineroar/ckan-base:1.3-networking-tools
+          image: quay.io/incineroar/ckan-base:2.1
           ports:
             - containerPort: 5000
           envFrom:

@@ -5,6 +5,18 @@ Goal 1) Get minimal ckan deployment running in Openshift sandbox
 - postgres db
 - solr (for searching)
 
+DONE!!!
+
+Goal 2) Add Redis
+
+Goal 3) Add Datastore + Dataloader (now XLoader?)
+
+Goal 4) Add gov extensions
+
+----------------------------------------------------------------------------
+GOAL 1
+----------------------------------------------------------------------------
+
 Start with ckan-docker repo:
 https://github.com/ckan/ckan-docker/tree/master
 
@@ -22,7 +34,7 @@ KUBERNETES COMPONENTS:
     - postgres db
     - solr
 - 3 services
-    - ckan (internal service, exposed via route later)
+    - ckan (internal service, exposed via route)
     - postgres db (internal service)
     - solr (internal service)
 - 3 persistent volume claims
@@ -36,5 +48,19 @@ KUBERNETES COMPONENTS:
 - 1 route
     - For external access
 
-NOTES TO SELF
-- Add script to docker-entrypoint.d (for ckan) to overwrite localhost with db
+ALEMBIC (these hardcoded localhost values may cause issues later):
+/srv/app/src/ckan/ckan/migration/alembic.ini
+/srv/app/src/ckan/ckanext/activity/migration/activity/alembic.ini
+/srv/app/src/ckan/ckanext/example_database_migrations/migration/example_database_migrations/alembic.ini
+/srv/app/src/ckan/ckanext/tracking/migration/tracking/alembic.ini
+
+TRACE:
+/usr/local/bin/ckan
+/srv/app/src/ckan/ckan/cli/cli.py
+/srv/app/src/ckan/ckan/config/middleware/__init__.py
+/srv/app/src/ckan/ckan/config/environment.py
+/srv/app/src/
+
+SOME NOTES:
+- Use https
+- 

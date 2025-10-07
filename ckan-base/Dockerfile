@@ -10,6 +10,9 @@ COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 # runtime mounted ones)
 COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
+# Copy override files in setup/
+COPY setup/prerun.py.override ${APP_DIR}/prerun.py
+
 USER root
 
 # Install debugging/network tools

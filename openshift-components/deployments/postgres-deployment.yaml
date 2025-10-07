@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: quay.io/incineroar/ckan-postgres:1.0
+          image: quay.io/incineroar/ckan-postgres:1.1
           ports:
             - containerPort: 5432
           envFrom:
