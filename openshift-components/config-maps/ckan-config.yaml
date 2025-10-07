@@ -3,11 +3,24 @@ kind: ConfigMap
 metadata:
   name: ckan-config
 data:
+  # Host Ports
+  CKAN_PORT_HOST: "5000"
+  
+  # CKAN Databases
   POSTGRES_HOST: "db"
   CKAN_SQLALCHEMY_URL: "postgresql://ckandbuser:ckandbpassword@db/ckandb"
+  CKAN_DATASTORE_WRITE_URL: "postgresql://ckandbuser:ckandbpassword@db/datastore"
+  CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@db/datastore"
+
+  # Test Database Connections
   TEST_CKAN_SQLALCHEMY_URL: "postgres://ckan:ckan@db/ckan_test"
-  TEST_CKAN_SQLALCHEMY_URL: "postgres://ckan:ckan@postgres/ckan_test"
+  TEST_CKAN_DATASTORE_WRITE_URL: "postgresql://ckan:ckan@db/datastore_test"
+  TEST_CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@db/datastore_test"
+
+  # Dev Settings
   USE_HTTPS_FOR_DEV: "false"
+  
+  # CKAN Core
   CKAN_VERSION: "2.10.0"
   CKAN_SITE_ID: "default"
   CKAN_SITE_URL: "https://ckan-incineroar-dev.apps.rm2.thpm.p1.openshiftapps.com"
@@ -18,7 +31,20 @@ data:
   CKAN_STORAGE_PATH: "/var/lib/ckan"
   CKAN_MAX_UPLOAD_SIZE_MB: "100"
   TZ: "UTC"
+  
+  # Solr
   SOLR_IMAGE_VERSION: "2.10-solr9"
   CKAN_SOLR_URL: "http://solr:8983/solr/ckan"
   TEST_CKAN_SOLR_URL: "http://solr:8983/solr/ckan"
-  CKAN__PLUGINS: "image_view text_view datatables_view"
+
+  # Redis
+  REDIS_VERSION: "6"
+  CKAN_REDIS_URL: "redis://redis:6379/1"
+  TEST_CKAN_REDIS_URL: "redis://redis:6379/1"
+
+  # Extensions
+  CKAN__PLUGINS: "image_view text_view datatables_view datastore envvars"
+  CKAN__HARVEST__MQ__TYPE: "redis"
+  CKAN__HARVEST__MQ__HOSTNAME: "redis"
+  CKAN__HARVEST__MQ__PORT: "6379"
+  CKAN__HARVEST__MQ__REDIS_DB: "1"

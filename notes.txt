@@ -9,9 +9,13 @@ DONE!!!
 
 Goal 2) Add Redis
 
-Goal 3) Add Datastore + Dataloader (now XLoader?)
+DONE!!!
 
-Goal 4) Add gov extensions
+Goal 3) Add Datastore
+
+Goal 4) Add XLoader (XLoader is replacing DataPusher)
+
+Goal 5) Add gov extensions
 
 ----------------------------------------------------------------------------
 GOAL 1
@@ -29,7 +33,7 @@ STEPS:
 the components to run within the Openshift sandbox
 
 KUBERNETES COMPONENTS:
-- 3 Deployments (--> 3 images, 3 quay repositories)
+- 3 deployments (--> 3 images, 3 quay repositories)
     - ckan-base
     - postgres db
     - solr
@@ -63,4 +67,13 @@ TRACE:
 
 SOME NOTES:
 - Use https
-- 
+
+----------------------------------------------------------------------------
+GOAL 2 (Redis)
+----------------------------------------------------------------------------
+
+KUBERNETES COMPONENTS:
+- 1 Redis deployment (1 image, official one from Docker Hub)
+- 1 Redis service
+- Modify config map (add Redis env vars)
+- Potentially modify secret (add Redis env vars)

@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: quay.io/incineroar/ckan-postgres:1.1
+          image: quay.io/incineroar/ckan-postgres:1.2
           ports:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: ckan-secret
+                name: postgres-secret
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql

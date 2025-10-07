@@ -17,12 +17,15 @@ services:
       - ckannet
       - dbnet
       - solrnet
+      - redisnet
     env_file:
       - .env
     depends_on:
       db:
         condition: service_healthy
       solr:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     volumes:
       - ckan_storage:/var/lib/ckan
@@ -47,6 +50,9 @@ services:
       - CKAN_DB_USER
       - CKAN_DB_PASSWORD
       - CKAN_DB
+      - DATASTORE_READONLY_USER
+      - DATASTORE_READONLY_PASSWORD
+      - DATASTORE_DB
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -62,10 +68,20 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    networks:
+      - redisnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-e", "QUIT"]
     
 networks:
   ckannet:
   solrnet:
     internal: true
   dbnet:
+    internal: true
+  redisnet:
     internal: true
