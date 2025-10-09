@@ -1,1 +1,1 @@
-Will make later.
+Placeholder. Routes can be created directly via the CLI. Only 1 route needed to expose CKAN service.

@@ -1,3 +1,2 @@
-Patches included in this dir are applied in the RUN command of the Dockerfile.
-Make a subdir for each component you want to patch (?).
+Patches included in this dir are applied at image build.
 Use files with extension .patch.

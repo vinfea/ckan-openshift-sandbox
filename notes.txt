@@ -9,9 +9,11 @@ DONE!!!
 
 Goal 2) Add Redis
 
-DONE!!!
+DONE!!! (have to test)
 
 Goal 3) Add Datastore
+
+DONE!!! (have to test)
 
 Goal 4) Add XLoader (XLoader is replacing DataPusher)
 
@@ -46,13 +48,16 @@ KUBERNETES COMPONENTS:
     - pg-data (/var/lib/postgresql/data)
     - solr-data (/var/solr)
 - 1 config map
-    - for non-sensitive values in .env
-- 1 secret
-    - for sensitive values in .env
+    - for ckan
+    - (non-sensitive values in .env)
+- 2 secrets
+    - for ckan
+    - for postgres
+    - (sensitive values in .env)
 - 1 route
     - For external access
 
-ALEMBIC (these hardcoded localhost values may cause issues later):
+ALEMBIC (these localhost values may cause issues later):
 /srv/app/src/ckan/ckan/migration/alembic.ini
 /srv/app/src/ckan/ckanext/activity/migration/activity/alembic.ini
 /srv/app/src/ckan/ckanext/example_database_migrations/migration/example_database_migrations/alembic.ini
@@ -77,3 +82,10 @@ KUBERNETES COMPONENTS:
 - 1 Redis service
 - Modify config map (add Redis env vars)
 - Potentially modify secret (add Redis env vars)
+
+----------------------------------------------------------------------------
+GOAL 3 (Datastore)
+----------------------------------------------------------------------------
+
+This does not introduce any new components, just modifies the ckan-base image and adds some environment variables (modifies configs/secrets).
+

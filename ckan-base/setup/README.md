@@ -1,10 +1,6 @@
-3 files:
-- prerun.py.override
-- start_ckan.sh.override
-- start_ckan_development.sh.override
+Files in this folder should be used to override default setup behaviour.
 
-These setup files (minus the .override) are in the ckan-base image (which we build on top of in our Dockerfile).
-
-Files in this folder should be used to override default setup behaviour (I think).
-
-This folder is not referenced in the given Dockerfile but of course can be.
+3 files that can be overwritten:
+- prerun.py
+- start_ckan.sh
+- start_ckan_development.sh

@@ -15,22 +15,6 @@ COPY setup/prerun.py.override ${APP_DIR}/prerun.py
 
 USER root
 
-# Install debugging/network tools
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        iputils-ping \
-        netcat-openbsd \
-        dnsutils \
-        procps \
-        curl \
-        wget \
-        vim-tiny \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /stupid/test/incineroar \
-&& chown -R root:0 /stupid/test/incineroar \
-&& chmod -R g+rwX /stupid/test/incineroar
-
 RUN chgrp -R 0 ${APP_DIR} && \
     chmod -R g=u ${APP_DIR}
 
