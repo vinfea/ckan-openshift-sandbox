@@ -2,7 +2,8 @@ Docker
 ----------------------------
 cd ../ckan-base
 docker image rm ckan-base-image
-docker build -t ckan-base-image --platform linux/amd64 .
+[add build time env vars]
+docker build -t ckan-base-image --build-arg XLOADER_VERSION=1.0.1 --build-arg TZ=UTC --platform linux/amd64 .
 ----------------------------
 
 quay.io
