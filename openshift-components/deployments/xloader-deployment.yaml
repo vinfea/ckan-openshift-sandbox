@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan-xloader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ckan-xloader
+  template:
+    metadata:
+      labels:
+        app: ckan-xloader
+    spec:
+      containers:
+      - name: ckan-xloader
+        image: ckan/ckan-base-xloader:1.0.1
+        envFrom:
+        - configMapRef:
+            name: ckan-config
+        - secretRef:
+            name: ckan-secret

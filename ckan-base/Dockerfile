@@ -1,7 +1,18 @@
 FROM ckan/ckan-base:2.11
 
+ARG XLOADER_VERSION=${XLOADER_VERSION}
+
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
+
+USER root
+
+# Install the XLoader extension
+RUN pip3 install -U pip && \ 
+    cd ${SRC_DIR} && \
+    pip3 install -e git+https://github.com/ckan/ckanext-xloader.git@${XLOADER_VERSION}#egg=ckanext-xloader && \
+    pip3 install -r ckanext-xloader/requirements.txt && \
+    pip3 install -U requests[security]
 
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
@@ -13,8 +24,7 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 # Copy override files in setup/
 COPY setup/prerun.py.override ${APP_DIR}/prerun.py
 
-USER root
-
+# Ownership and permission changes for Openshift
 RUN chgrp -R 0 ${APP_DIR} && \
     chmod -R g=u ${APP_DIR}
 

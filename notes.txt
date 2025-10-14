@@ -89,3 +89,21 @@ GOAL 3 (Datastore)
 
 This does not introduce any new components, just modifies the ckan-base image and adds some environment variables (modifies configs/secrets).
 
+----------------------------------------------------------------------------
+GOAL 4 (XLoader)
+----------------------------------------------------------------------------
+
+Referencing the XLoader-replacement branch of the ckan-docker repo.
+
+With Docker, replacing DataPusher with XLoader requires the following changes:
+- Modify .env
+- Modify docker-compose
+- Modify the ckan-base Dockerfile
+- Adding a new entrypoint script to ckan-base (and possibly deleting the old datapusher one)
+
+XLoader runs in its own container (with the ckan-base container as a dependency). The XLoader image is very similar (almost identical) to the ckan-base image.
+
+KUBERNETES COMPONENTS:
+- XLoader Deployment
+- Modify ckan-base image
+- Modify ckan-config (configMap)
