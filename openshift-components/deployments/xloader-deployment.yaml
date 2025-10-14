@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ckan-xloader
-        image: ckan/ckan-base-xloader:1.0.1
+        image: quay.io/incineroar/ckan-xloader:1.0
         envFrom:
         - configMapRef:
             name: ckan-config
