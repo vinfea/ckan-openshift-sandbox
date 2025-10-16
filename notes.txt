@@ -99,7 +99,7 @@ With Docker, replacing DataPusher with XLoader requires the following changes:
 - Modify .env
 - Modify docker-compose
 - Modify the ckan-base Dockerfile
-- Adding a new entrypoint script to ckan-base (and possibly deleting the old datapusher one)
+- Add a new entrypoint script to ckan-base (and delete the old datapusher one)
 
 XLoader runs in its own container (with the ckan-base container as a dependency). The XLoader image is very similar (almost identical) to the ckan-base image.
 
@@ -107,3 +107,33 @@ KUBERNETES COMPONENTS:
 - XLoader Deployment
 - Modify ckan-base image
 - Modify ckan-config (configMap)
+
+ENV VARS:
+- beaker.session.secret = ''
+- Set up [ckan.datapusher.api_token] in the CKAN config file
+  The xloader equivalent seems to be [ckanext.xloader.api_token]
+  This is documented in the ckan-xloader repo
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJuQXlRaEJ3bGdlX1Brc0lfaG1VcV9VUnV3ZzNKMUR5Yjd6c1dTTkVTNUZnIiwiaWF0IjoxNzYwNjMwMjU1fQ.5oCQcR2gavrGTUh7fJ4XlZ5U1DN5Yt4132AbC7k3C_c
+
+- Set up [ckan.xloader.api_token] in the CKAN config file
+  Is it ckan. or ckanext. ? Who's to say? Are they even the same thing?
+
+- Set up [ckanext.xloader.jobs_db.uri] in the CKAN config file
+  This is documented in the ckan-xloader repo
+
+postgresql://ckandbuser:ckandbpassword@db/ckandb
+
+OTHER ERRORS:
+
+*** Starting uWSGI 2.0.21 (64bit) on [Thu Oct 16 15:41:37 2025] ***
+compiled with version: 12.2.1 20220924 on 09 November 2022 12:47:28
+os: Linux-5.14.0-570.51.1.el9_6.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Sep 27 01:10:11 EDT 2025
+nodename: ckan-xloader-c7cbbb75d-mnt7f
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /srv/app
+detected binary path: /usr/sbin/uwsgi
+cannot setgid() as non-root user
