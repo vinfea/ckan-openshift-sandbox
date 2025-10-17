@@ -110,16 +110,16 @@ KUBERNETES COMPONENTS:
 
 ENV VARS:
 - beaker.session.secret = ''
-- Set up [ckan.datapusher.api_token] in the CKAN config file
+- Set up ckan.datapusher.api_token in the CKAN config file
   The xloader equivalent seems to be [ckanext.xloader.api_token]
   This is documented in the ckan-xloader repo
 
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJuQXlRaEJ3bGdlX1Brc0lfaG1VcV9VUnV3ZzNKMUR5Yjd6c1dTTkVTNUZnIiwiaWF0IjoxNzYwNjMwMjU1fQ.5oCQcR2gavrGTUh7fJ4XlZ5U1DN5Yt4132AbC7k3C_c
 
-- Set up [ckan.xloader.api_token] in the CKAN config file
+- Set up ckan.xloader.api_token in the CKAN config file
   Is it ckan. or ckanext. ? Who's to say? Are they even the same thing?
 
-- Set up [ckanext.xloader.jobs_db.uri] in the CKAN config file
+- Set up ckanext.xloader.jobs_db.uri in the CKAN config file
   This is documented in the ckan-xloader repo
 
 postgresql://ckandbuser:ckandbpassword@db/ckandb
