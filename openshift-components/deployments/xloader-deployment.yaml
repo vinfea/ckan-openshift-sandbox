@@ -14,9 +14,7 @@ spec:
     spec:
       containers:
       - name: ckan-xloader
-        image: quay.io/incineroar/ckan-xloader:1.4
-        ports:
-          - containerPort: 8080
+        image: quay.io/incineroar/ckan-xloader:1.6
         envFrom:
         - configMapRef:
             name: ckan-config
