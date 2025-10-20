@@ -29,3 +29,19 @@ spec:
         - name: ckan-storage
           persistentVolumeClaim:
             claimName: ckan-storage
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan
+  labels:
+    app: ckan
+spec:
+  ports:
+    - name: http
+      port: 5000          # The port the service exposes internally
+      targetPort: 5000    # Must match the CKAN container port
+  selector:
+    app: ckan

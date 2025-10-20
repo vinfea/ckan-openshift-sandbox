@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: solr
+  name: ckan-solr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: solr
+      app: ckan-solr
   template:
     metadata:
       labels:
-        app: solr
+        app: ckan-solr
     spec:
       containers:
         - name: solr
@@ -24,3 +24,19 @@ spec:
         - name: ckan-solr-data
           persistentVolumeClaim:
             claimName: ckan-solr-data
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan-solr
+  labels:
+    app: ckan-solr
+spec:
+  ports:
+    - name: solr
+      port: 8983          # The port the service exposes internally
+      targetPort: 8983    # Must match the Solr container port
+  selector:
+    app: ckan-solr

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: ckan-postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: ckan-postgres
   template:
     metadata:
       labels:
-        app: postgres
+        app: ckan-postgres
     spec:
       containers:
         - name: postgres
@@ -27,3 +27,20 @@ spec:
         - name: ckan-postgres-data
           persistentVolumeClaim:
             claimName: ckan-postgres-data
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan-db
+  labels:
+    app: ckan-postgres
+spec:
+  ports:
+    - name: postgres
+      port: 5432          # The port the service exposes internally
+      targetPort: 5432    # Must match the Postgres container port
+  selector:
+    app: ckan-postgres
+
