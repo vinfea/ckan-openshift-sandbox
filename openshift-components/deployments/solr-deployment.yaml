@@ -18,9 +18,9 @@ spec:
           ports:
             - containerPort: 8983
           volumeMounts:
-            - name: solr-data
+            - name: ckan-solr-data
               mountPath: /var/solr
       volumes:
-        - name: solr-data
+        - name: ckan-solr-data
           persistentVolumeClaim:
-            claimName: solr-data
+            claimName: ckan-solr-data

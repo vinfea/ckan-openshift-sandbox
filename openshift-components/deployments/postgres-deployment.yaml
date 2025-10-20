@@ -19,11 +19,11 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: postgres-secret
+                name: ckan-postgres-secret
           volumeMounts:
-            - name: postgres-data
+            - name: ckan-postgres-data
               mountPath: /var/lib/postgresql
       volumes:
-        - name: postgres-data
+        - name: ckan-postgres-data
           persistentVolumeClaim:
-            claimName: postgres-data
+            claimName: ckan-postgres-data
