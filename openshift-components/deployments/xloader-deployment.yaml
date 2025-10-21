@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: ckan-xloader
+        app.kubernetes.io/part-of: ckan
     spec:
       containers:
       - name: ckan-xloader
@@ -20,3 +21,10 @@ spec:
             name: ckan-config
         - secretRef:
             name: ckan-secret
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"

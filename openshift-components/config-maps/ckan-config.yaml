@@ -50,7 +50,6 @@ data:
   CKAN__HARVEST__MQ__REDIS_DB: "1"
 
   # XLoader
-  CKAN__XLOADER__API_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJORGFkRzFuRDBldXhZMnBka0JmY2Z4Y0oxS2p5YmtMZWp0VVN5YkxtVmJNIiwiaWF0IjoxNzYxMDY1NzgyfQ.UUYsNQ_lKB2aUehguG4AIsIUJe5UcHJ-8d8fwb3O0Tk"
   CKAN__XLOADER__JOBS_DB__URI: "postgresql://ckandbuser:ckandbpassword@ckan-db/ckandb"
   
   

@@ -11,10 +11,11 @@ spec:
     metadata:
       labels:
         app: ckan
+        app.kubernetes.io/part-of: ckan
     spec:
       containers:
         - name: ckan
-          image: quay.io/incineroar/ckan-base:2.2
+          image: quay.io/incineroar/ckan-base:2.3
           ports:
             - containerPort: 5000
           envFrom:
