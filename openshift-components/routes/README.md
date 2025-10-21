@@ -1,1 +1,3 @@
-Placeholder. Routes can be created directly via the CLI. Only 1 route needed to expose CKAN service.
+Route created using command:
+
+oc create route edge ckan --service=ckan --hostname=ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca

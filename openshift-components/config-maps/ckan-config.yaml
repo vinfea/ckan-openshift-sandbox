@@ -23,7 +23,7 @@ data:
   # CKAN Core
   CKAN_VERSION: "2.10.0"
   CKAN_SITE_ID: "default"
-  CKAN_SITE_URL: "https://ckan-incineroar-dev.apps.rm2.thpm.p1.openshiftapps.com"
+  CKAN_SITE_URL: "https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca"
   CKAN___BEAKER__SESSION__SECRET: "CHANGE_ME"
   CKAN___API_TOKEN__JWT__ENCODE__SECRET: "string:CHANGE_ME"
   CKAN___API_TOKEN__JWT__DECODE__SECRET: "string:CHANGE_ME"
@@ -50,7 +50,7 @@ data:
   CKAN__HARVEST__MQ__REDIS_DB: "1"
 
   # XLoader
-  CKAN__XLOADER__API_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJuQXlRaEJ3bGdlX1Brc0lfaG1VcV9VUnV3ZzNKMUR5Yjd6c1dTTkVTNUZnIiwiaWF0IjoxNzYwNjMwMjU1fQ.5oCQcR2gavrGTUh7fJ4XlZ5U1DN5Yt4132AbC7k3C_c"
+  CKAN__XLOADER__API_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJORGFkRzFuRDBldXhZMnBka0JmY2Z4Y0oxS2p5YmtMZWp0VVN5YkxtVmJNIiwiaWF0IjoxNzYxMDY1NzgyfQ.UUYsNQ_lKB2aUehguG4AIsIUJe5UcHJ-8d8fwb3O0Tk"
   CKAN__XLOADER__JOBS_DB__URI: "postgresql://ckandbuser:ckandbpassword@ckan-db/ckandb"
   
   
