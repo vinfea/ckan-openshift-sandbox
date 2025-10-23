@@ -10,6 +10,9 @@ RUN sed -i 's/--uid 92//g' /srv/app/start_ckan.sh && \
 RUN chgrp -R 0 ${APP_DIR} && \
     chmod -R g=u ${APP_DIR}
 
+RUN chgrp -R 0 /var/lib/ckan && \
+    chmod -R g=u /var/lib/ckan
+
 # Supervisord
 
 COPY supervisord.conf /etc/supervisord.conf
