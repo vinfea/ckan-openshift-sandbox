@@ -51,4 +51,4 @@ data:
 
   # CKAN Worker
   CKAN_WORKER: "true"
-  CKAN_WORKER_OPTS: ""
+  CKAN_WORKER_OPTS: "default"
