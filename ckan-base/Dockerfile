@@ -23,10 +23,13 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
 # Copy override files in setup/
 COPY setup/prerun.py.override ${APP_DIR}/prerun.py
+COPY setup/start_ckan.sh.override ${APP_DIR}/start_ckan.sh
 
 # Ownership and permission changes for Openshift
 RUN chgrp -R 0 ${APP_DIR} && \
     chmod -R g=u ${APP_DIR}
+
+RUN chmod g+rx ${APP_DIR}/start_ckan.sh
 
 USER ckan
 

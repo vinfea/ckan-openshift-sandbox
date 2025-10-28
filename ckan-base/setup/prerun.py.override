@@ -1,5 +1,4 @@
 import os
-import pwd
 import sys
 import subprocess
 import psycopg2
@@ -15,7 +14,6 @@ import re
 import json
 
 ckan_ini = os.environ.get("CKAN_INI", "/srv/app/ckan.ini")
-print("[prerun]!!!!!!!!!! CKAN_INI=", ckan_ini)
 
 RETRY = 5
 
@@ -23,7 +21,6 @@ RETRY = 5
 def update_plugins():
 
     plugins = os.environ.get("CKAN__PLUGINS", "")
-    print("[prerun]!!!!!!!!!! CKAN_PLUGINS=", plugins)
     print(("[prerun] Setting the following plugins in {}:".format(ckan_ini)))
     print(plugins)
     cmd = ["ckan", "config-tool", ckan_ini, "ckan.plugins = {}".format(plugins)]
@@ -73,7 +70,6 @@ def update_site_url():
 def check_main_db_connection(retry=None):
 
     conn_str = os.environ.get("CKAN_SQLALCHEMY_URL")
-    print("[prerun]!!!!!!!!!! CKAN_SQLALCHEMY_URL=", conn_str)
     if not conn_str:
         print("[prerun] CKAN_SQLALCHEMY_URL not defined, not checking db")
         return
@@ -83,7 +79,6 @@ def check_main_db_connection(retry=None):
 def check_datastore_db_connection(retry=None):
 
     conn_str = os.environ.get("CKAN_DATASTORE_WRITE_URL")
-    print("[prerun]!!!!!!!!!! CKAN_DATASTORE_WRITE_URL=", conn_str)
     if not conn_str:
         print("[prerun] CKAN_DATASTORE_WRITE_URL not defined, not checking db")
         return
@@ -100,7 +95,6 @@ def check_db_connection(conn_str, retry=None):
 
     try:
         connection = psycopg2.connect(conn_str)
-        print(f"[prerun]!!!!!!!!!! Successfully connected to the database: {conn_str}")
 
     except psycopg2.Error as e:
         print(str(e))
@@ -120,7 +114,6 @@ def check_solr_connection(retry=None):
         sys.exit(1)
 
     url = os.environ.get("CKAN_SOLR_URL", "")
-    print("[prerun]!!!!!!!!!! CKAN_SOLR_URL=", url)
     search_url = '{url}/schema/name?wt=json'.format(url=url)
 
     try:
@@ -142,7 +135,7 @@ def check_solr_connection(retry=None):
 
 def init_db():
 
-    db_command = ["ckan", "-c", ckan_ini, "db", "upgrade"]
+    db_command = ["ckan", "-c", ckan_ini, "db", "init"]
     print("[prerun] Initializing or upgrading db - start")
     try:
         subprocess.check_output(db_command, stderr=subprocess.STDOUT)
@@ -161,7 +154,6 @@ def init_db():
 def init_datastore_db():
 
     conn_str = os.environ.get("CKAN_DATASTORE_WRITE_URL")
-    print("[prerun]!!!!!!!!!! CKAN_DATASTORE_WRITE_URL=", conn_str)
     if not conn_str:
         print("[prerun] Skipping datastore initialization")
         return
@@ -187,7 +179,6 @@ def init_datastore_db():
         connection.commit()
 
         print("[prerun] Initializing datastore db - end")
-        print(datastore_perms.stdout.read())
     except psycopg2.Error as e:
         print("[prerun] Could not initialize datastore")
         print(str(e))
@@ -209,11 +200,8 @@ def init_datastore_db():
 def create_sysadmin():
 
     name = os.environ.get("CKAN_SYSADMIN_NAME")
-    print("[prerun]!!!!!!!!!! CKAN_SYSADMIN_NAME=", name)
     password = os.environ.get("CKAN_SYSADMIN_PASSWORD")
-    print("[prerun]!!!!!!!!!! CKAN_SYSADMIN_PASSWORD=", password)
     email = os.environ.get("CKAN_SYSADMIN_EMAIL")
-    print("[prerun]!!!!!!!!!! CKAN_SYSADMIN_EMAIL=", email)
 
     if name and password and email:
 
@@ -249,33 +237,24 @@ def create_sysadmin():
         # cleanup permissions
         # We're running as root before pivoting to uwsgi and dropping privs
         data_dir = "%s/storage" % os.environ['CKAN_STORAGE_PATH']
-        print("[prerun]!!!!!!!!!! CKAN_STORAGE_PATH=", data_dir)
 
-        try:
-            user_name = "ckan-sys"
-            pwd.getpwnam(user_name)
-            command = ["chown", "-R", "ckan:ckan-sys", data_dir]
-        except KeyError:
-            user_name = "ckan"
-            command = ["chown", "-R", "ckan:ckan", data_dir]
+        command = ["chown", "-R", "ckan:ckan-sys", data_dir]
         subprocess.call(command)
-
-        print("[prerun] Ensured storage directory is owned by {}".format(user_name))
+        print("[prerun] Ensured storage directory is owned by ckan")
 
 if __name__ == "__main__":
 
     maintenance = os.environ.get("MAINTENANCE_MODE", "").lower() == "true"
-    print("[prerun]!!!!!!!!!! MAINTENANCE_MODE=", maintenance)
 
     if maintenance:
         print("[prerun] Maintenance mode, skipping setup...")
     else:
         update_database_url()
         update_site_url()
+        # ----------------------------
         check_main_db_connection()
-        # Swap update_plugins() and init_db() order
-        update_plugins()
         init_db()
+        update_plugins()
         check_datastore_db_connection()
         init_datastore_db()
         check_solr_connection()
