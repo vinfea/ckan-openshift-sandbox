@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ckan-config
+data:
+  CKAN_WORKER: "true"
+  CKAN_WORKER_OPTS: ""
