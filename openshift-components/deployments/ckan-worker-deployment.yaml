@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ckan-worker
-        image: quay.io/incineroar/ckan-base:2.8
+        image: quay.io/incineroar/ckan-base:3.3
         envFrom:
         - configMapRef:
             name: ckan-worker-config

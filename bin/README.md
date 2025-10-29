@@ -1,1 +1,0 @@
-The scripts in this folder are not part of the containerized workflow and must be run manually (for testing/development).
