@@ -11,8 +11,8 @@ docker build -t ckan-base-image --build-arg XLOADER_VERSION=2.2.0 --build-arg TZ
 
 quay.io
 ----------------------------
-docker tag ckan-base-image quay.io/incineroar/ckan-base:3.0
-docker push quay.io/incineroar/ckan-base:3.0
+docker tag ckan-base-image quay.io/incineroar/ckan-base:4.0
+docker push quay.io/incineroar/ckan-base:4.0
 ----------------------------
 
 OpenShift
@@ -46,6 +46,3 @@ oc apply -f deployments/ckan-worker-deployment.yaml
 Misc
 ----------------------------------------------------------------------------
 oc exec -it <pod> -- /bin/bash
-
-
-CKAN version 2.11.4

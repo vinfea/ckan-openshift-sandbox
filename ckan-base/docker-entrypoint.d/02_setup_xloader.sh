@@ -19,3 +19,17 @@ if [[ $CKAN__PLUGINS == *"xloader"* ]]; then
 else
    echo "Not configuring xloader"
 fi
+
+echo "---------------------------------------------------------------"
+echo "[INFO] Checking CKAN_SQLALCHEMY_URL for jobs_db.uri configuration..."
+echo "[INFO] CKAN_SQLALCHEMY_URL = ${CKAN_SQLALCHEMY_URL:-<not set>}"
+
+if [[ -z "${CKAN_SQLALCHEMY_URL:-}" ]]; then
+   echo "[ERROR] CKAN_SQLALCHEMY_URL is not set! Cannot configure jobs_db.uri."
+   exit 1
+else
+   echo "[INFO] Setting ckanext.xloader.jobs_db.uri in CKAN config..."
+   ckan config-tool "$CKAN_INI" "ckanext.xloader.jobs_db.uri=${CKAN_SQLALCHEMY_URL}"
+   echo "[INFO] Successfully updated ckanext.xloader.jobs_db.uri in $CKAN_INI"
+fi
+echo "************************SETUP COMPLETE************************"

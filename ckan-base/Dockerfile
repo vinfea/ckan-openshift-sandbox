@@ -1,4 +1,4 @@
-FROM ckan/ckan-base:2.11
+FROM ckan/ckan-base:2.11.3
 
 ARG XLOADER_VERSION=${XLOADER_VERSION}
 
@@ -14,9 +14,6 @@ RUN pip3 install -U pip && \
     pip3 install -r ckanext-xloader/requirements.txt && \
     pip3 install -U requests[security]
 
-# Pin pkg_resources
-RUN pip install "setuptools<81"
-
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 
@@ -29,9 +26,10 @@ COPY setup/prerun.py.override ${APP_DIR}/prerun.py
 COPY setup/start_ckan.sh.override ${APP_DIR}/start_ckan.sh
 
 # Ownership and permission changes for Openshift
-RUN mkdir -p ${APP_DIR} /etc/ckan /var/lib/ckan && \
-    chgrp -R 0 ${APP_DIR} /etc/ckan /var/lib/ckan && \
-    chmod -R g=u ${APP_DIR} /etc/ckan /var/lib/ckan
+RUN mkdir -p ${APP_DIR} /etc/ckan /var/lib/ckan \
+    && chgrp -R 0 ${APP_DIR} /etc/ckan /var/lib/ckan \
+    && chmod -R g+rwX ${APP_DIR} /etc/ckan /var/lib/ckan \
+    && chmod g+s ${APP_DIR} /etc/ckan /var/lib/ckan
 
 RUN chmod g+rx ${APP_DIR}/start_ckan.sh
 

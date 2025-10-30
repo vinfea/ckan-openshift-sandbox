@@ -7,6 +7,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   # storageClassName can be omitted to use the default StorageClass
   # of the OpenShift sandbox

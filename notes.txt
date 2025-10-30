@@ -3,21 +3,29 @@ PLAN:
 Goal 1) Get minimal ckan deployment running in Openshift sandbox
 - ckan-base
 - postgres db
-- solr (for searching)
+- solr
 
 DONE!!!
 
 Goal 2) Add Redis
 
-DONE!!! (have to test)
+DONE!!! (Redis works for queueing jobs for Xloader + Datastore)
 
 Goal 3) Add Datastore
 
-DONE!!! (have to test)
+DONE!!!
 
 Goal 4) Add XLoader (XLoader is replacing DataPusher)
 
-Goal 5) Add gov extensions
+DONE!!!
+
+The XLoader extension works by sending background jobs to the ckan-worker pod (this pod has the same image as the ckan webapp, but a different deployment)
+
+Goal 5) Full deployment on government dev namespace (allow scaling of stateful apps using operator)
+
+Goal 6) Add SDI configurations / patches / extensions
+
+Goal 7) Add Gov Canada theme
 
 ----------------------------------------------------------------------------
 GOAL 1
@@ -101,39 +109,10 @@ With Docker, replacing DataPusher with XLoader requires the following changes:
 - Modify the ckan-base Dockerfile
 - Add a new entrypoint script to ckan-base (and delete the old datapusher one)
 
-XLoader runs in its own container (with the ckan-base container as a dependency). The XLoader image is very similar (almost identical) to the ckan-base image.
-
 KUBERNETES COMPONENTS:
-- XLoader Deployment
 - Modify ckan-base image
-- Modify ckan-config (configMap)
+- Add ckan-worker deployment (same image as ckan-base)
+- Add ckan-worker-config
+- Modify active plugins in configMaps (add xloader and make sure datapusher is gone)
 
-ENV VARS:
-- beaker.session.secret = ''
-- Set up ckan.datapusher.api_token in the CKAN config file
-  The xloader equivalent seems to be [ckanext.xloader.api_token]
-  This is documented in the ckan-xloader repo
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJuQXlRaEJ3bGdlX1Brc0lfaG1VcV9VUnV3ZzNKMUR5Yjd6c1dTTkVTNUZnIiwiaWF0IjoxNzYwNjMwMjU1fQ.5oCQcR2gavrGTUh7fJ4XlZ5U1DN5Yt4132AbC7k3C_c
-
-- Set up ckan.xloader.api_token in the CKAN config file
-  Is it ckan. or ckanext. ? Who's to say? Are they even the same thing?
-
-- Set up ckanext.xloader.jobs_db.uri in the CKAN config file
-  This is documented in the ckan-xloader repo
-
-postgresql://ckandbuser:ckandbpassword@db/ckandb
-
-OTHER ERRORS:
-
-*** Starting uWSGI 2.0.21 (64bit) on [Thu Oct 16 15:41:37 2025] ***
-compiled with version: 12.2.1 20220924 on 09 November 2022 12:47:28
-os: Linux-5.14.0-570.51.1.el9_6.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Sep 27 01:10:11 EDT 2025
-nodename: ckan-xloader-c7cbbb75d-mnt7f
-machine: x86_64
-clock source: unix
-pcre jit disabled
-detected number of CPU cores: 8
-current working directory: /srv/app
-detected binary path: /usr/sbin/uwsgi
-cannot setgid() as non-root user
+Note that the command to build the ckan-base image should now include an additional build arg for the xloader version (see commands.txt)
