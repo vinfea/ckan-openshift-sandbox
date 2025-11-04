@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
 
 import sys
 import logging
 import ckan.plugins.toolkit as tk
-
-import os
 
 from ckanext.xloader.jobs import xloader_data_into_datastore_
 from ckanext.xloader.utils import XLoaderFormats, get_xloader_user_apitoken
@@ -116,7 +115,7 @@ class XloaderCmd:
             'ignore_hash': True,
         }
         if sync:
-            data_dict['ckan_url'] = os.environ.get('CKAN_SITE_URL', tk.config.get('ckan.site_url'))
+            data_dict['ckan_url'] = os.environ.get('CKAN_SERVICE_URL', tk.config.get('ckan.site_url'))
             input_dict = {
                 'metadata': data_dict,
                 'api_key': get_xloader_user_apitoken()

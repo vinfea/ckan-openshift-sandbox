@@ -160,3 +160,8 @@ If you want to overwrite site_url:
 site_url = Key().ckan.site_url
 
 But, I would suggest maybe overwriting the xloader jobs.py file instead. In the input dictionary, instead of using site_url for the value of ckan_url, use some custom env variable.
+
+Things that call xloader_data_into_datastore(input):
+
+/srv/app/src/ckanext-xloader/ckanext/xloader/action.py
+/srv/app/src/ckanext-xloader/ckanext/xloader/command.py

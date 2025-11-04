@@ -43,6 +43,27 @@ oc delete -f deployments/ckan-worker-deployment.yaml
 oc apply -f deployments/ckan-worker-deployment.yaml
 
 ----------------------------------------------------------------------------
+nginx
+----------------------------------------------------------------------------
+
+Docker
+----------------------------
+cd ../nginx
+docker image rm nginx-image
+docker build -t nginx-image --platform linux/amd64 .
+
+quay.io
+----------------------------
+docker tag nginx-image quay.io/incineroar/ckan-nginx:1.0
+docker push quay.io/incineroar/ckan-nginx:1.0
+
+OpenShift
+----------------------------
+cd ../openshift-components
+oc delete -f deployments/nginx-deployment.yaml
+oc apply -f deployments/nginx-deployment.yaml
+
+----------------------------------------------------------------------------
 Misc
 ----------------------------------------------------------------------------
 oc exec -it <pod> -- /bin/bash

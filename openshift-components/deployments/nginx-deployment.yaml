@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ckan-nginx
+  template:
+    metadata:
+      labels:
+        app: ckan-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: quay.io/incineroar/ckan-nginx:1.0
+          ports:
+            - containerPort: 443
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+              
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan-nginx
+  labels:
+    app: ckan
+spec:
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+      name: https
+  selector:
+    app: ckan-nginx
