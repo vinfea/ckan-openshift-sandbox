@@ -46,3 +46,5 @@ oc apply -f deployments/ckan-worker-deployment.yaml
 Misc
 ----------------------------------------------------------------------------
 oc exec -it <pod> -- /bin/bash
+
+oc label deployment ckan app.kubernetes.io/part-of=ckan

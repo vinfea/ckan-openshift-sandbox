@@ -116,3 +116,47 @@ KUBERNETES COMPONENTS:
 - Modify active plugins in configMaps (add xloader and make sure datapusher is gone)
 
 Note that the command to build the ckan-base image should now include an additional build arg for the xloader version (see commands.txt)
+
+----------------------------------------------------------------------------
+GOAL 5 (Gov Cluster Deployment)
+----------------------------------------------------------------------------
+
+SSL ISSUE
+
+Command:
+echo | openssl s_client -showcerts -connect ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca:443 2>/dev/null | openssl x509 -noout -issuer -subject
+
+issuer=C=CA, O=GC, CN=GOC-GDC-ISSUING-A2B
+subject=C=CA, ST=Quebec, L=Gatineau, O=Environment and Climate Change Canada, CN=ocp-internal, emailAddress=ssc.datainterchangewebops-echangededonneeswebops.spc@ssc-spc.gc.ca
+
+echo | openssl s_client -showcerts -connect ckan-landorus-dev.apps.rm3.7wse.p1.openshiftapps.com:443 2>/dev/null | openssl x509 -noout -issuer -subject
+
+issuer=C=US, O=Let's Encrypt, CN=R13
+subject=CN=api.rm3.7wse.p1.openshiftapps.com
+
+
+--------------------------------------------------------
+
+
+python -c "import requests; print(requests.get('http://ckan:5000', verify=True))"
+
+python -c "import requests; print(requests.get('https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca', verify=False))"
+
+
+/srv/app/src/ckanext-xloader/ckanext/xloader/jobs.py
+
+2025-11-03 22:03:46,312 INFO [ckan.lib.jobs] Added background job bdf9f002-1841-46bb-b0d1-c58a74ccb77f ("xloader_submit: package: 314b624c-f61b-49a1-bc04-54e61fc24406 resource: 56e6f821-cfd4-4e9a-9418-79525633532f") to queue "default"
+
+2025-11-03 22:03:46,312 INFO [ckan.lib.jobs] Added background job bdf9f002-1841-46bb-b0d1-c58a74ccb77f ("xloader_submit: package: 314b624c-f61b-49a1-bc04-54e61fc24406 resource: 56e6f821-cfd4-4e9a-9418-79525633532f") to queue "default"
+
+2025-11-03 22:03:46,312 DEBUG [ckanext.xloader.action] Enqueued xloader job=bdf9f002-1841-46bb-b0d1-c58a74ccb77f res_id=56e6f821-cfd4-4e9a-9418-79525633532f
+
+/srv/app/src/ckan/ckan/lib/jobs.py
+
+
+If you want to overwrite site_url:
+/srv/app/src/ckan/ckan/config/declaration/key.py has the line
+
+site_url = Key().ckan.site_url
+
+But, I would suggest maybe overwriting the xloader jobs.py file instead. In the input dictionary, instead of using site_url for the value of ckan_url, use some custom env variable.

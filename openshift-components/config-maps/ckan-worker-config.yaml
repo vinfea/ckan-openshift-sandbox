@@ -23,7 +23,7 @@ data:
   # CKAN Core
   CKAN_VERSION: "2.11.0"
   CKAN_SITE_ID: "default"
-  CKAN_SITE_URL: "https://ckan-landorus-dev.apps.rm3.7wse.p1.openshiftapps.com"
+  CKAN_SITE_URL: "http://ckan:5000"
   CKAN___BEAKER__SESSION__SECRET: "CHANGE_ME"
   CKAN___API_TOKEN__JWT__ENCODE__SECRET: "string:CHANGE_ME"
   CKAN___API_TOKEN__JWT__DECODE__SECRET: "string:CHANGE_ME"
