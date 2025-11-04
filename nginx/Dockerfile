@@ -14,10 +14,10 @@ COPY setup/default.conf ${NGINX_DIR}/conf.d/
 RUN mkdir -p ${NGINX_DIR}/certs
 
 # Ownership and permission changes for Openshift
-RUN mkdir -p ${NGINX_DIR} /usr/share/nginx /var/cache/nginx \
-    && chgrp -R 0 ${NGINX_DIR} /usr/share/nginx /var/cache/nginx \
-    && chmod -R g+rwX ${NGINX_DIR} /usr/share/nginx /var/cache/nginx \
-    && chmod g+s ${NGINX_DIR} /usr/share/nginx /var/cache/nginx
+RUN mkdir -p ${NGINX_DIR} /usr/share/nginx /var \
+    && chgrp -R 0 ${NGINX_DIR} /usr/share/nginx /var \
+    && chmod -R g+rwX ${NGINX_DIR} /usr/share/nginx /var \
+    && chmod g+s ${NGINX_DIR} /usr/share/nginx /var
 
 ENTRYPOINT \
   openssl req \
