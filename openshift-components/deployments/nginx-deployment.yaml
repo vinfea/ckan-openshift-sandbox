@@ -16,7 +16,7 @@ spec:
         - name: nginx
           image: quay.io/incineroar/ckan-nginx:1.0
           ports:
-            - containerPort: 443
+            - containerPort: 8443
           resources:
             requests:
               cpu: "250m"
@@ -36,8 +36,8 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 443
-      targetPort: 443
+      port: 8443
+      targetPort: 8443
       name: https
   selector:
     app: ckan-nginx
