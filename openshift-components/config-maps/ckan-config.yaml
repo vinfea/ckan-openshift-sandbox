@@ -25,7 +25,7 @@ data:
   # CKAN Core
   CKAN_VERSION: "2.11.0"
   CKAN_SITE_ID: "default"
-  CKAN_SITE_URL: "https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca"
+  CKAN_SITE_URL: "https://ckan-nginx-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca"
   CKAN_SERVICE_URL: "http://ckan:5000"
   CKAN___BEAKER__SESSION__SECRET: "CHANGE_ME"
   CKAN___API_TOKEN__JWT__ENCODE__SECRET: "string:CHANGE_ME"
