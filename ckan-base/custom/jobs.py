@@ -357,11 +357,26 @@ def _download_resource_data(resource, data, api_key, logger):
     url = modify_input_url(resource.get('url'))
     # check scheme
     url_parts = urlsplit(url)
+
     scheme = url_parts.scheme
     if scheme not in ('http', 'https', 'ftp'):
         raise JobError(
             'Only http, https, and ftp resources may be fetched.'
         )
+
+    ckan_service = os.getenv("CKAN_SERVICE")
+    logger.info('INCINEROAR {0}'.format(ckan_service))
+
+    url_parts = url_parts._replace(netloc = ckan_service)
+    logger.info('INCNEROAR (replaced netloc) {0}'.format(url_parts))
+
+    if scheme == 'https':
+        scheme = 'http'
+
+    url_parts = url_parts._replace(scheme = scheme)
+    logger.info('INCNEROAR (replaced scheme) {0}'.format(url_parts))
+
+    url = url_parts.geturl()
 
     # fetch the resource data
     logger.info('Fetching from: {0}'.format(url))
