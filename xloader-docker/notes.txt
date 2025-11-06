@@ -1,0 +1,17 @@
+1) start_ckan.sh.override
+
+This would be a pull request to ckan-docker-base. There are multiple ckan versions this change would have to cover (2.10, 2.11, etc), with dev and non-dev for each.
+
+The remaining files are modifications to ckan-docker.
+
+2) Dockerfile (and Dockerfile.dev)
+
+XLoader is installed here. Users can modify the Dockerfile if they don't want XLoader.
+
+3) .env.example
+
+Replaced datapusher with xloader in the active plugins. Removed datapusher related env vars. Added one build argument for ckan service (XLOADER_VERSION).
+
+4) docker-compose.yaml (and docker-compose.dev.yml)
+
+Currently, XLoader related env vars are directly in the compose.
