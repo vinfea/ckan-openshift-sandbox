@@ -30,9 +30,6 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 COPY setup/prerun.py.override ${APP_DIR}/prerun.py
 COPY setup/start_ckan.sh.override ${APP_DIR}/start_ckan.sh
 
-# SSL Error (XLoader)
-COPY custom/jobs.py /srv/app/src/ckanext-xloader/ckanext/xloader/jobs.py
-
 # Ownership and permission changes for Openshift
 RUN mkdir -p ${APP_DIR} /etc/ckan /var/lib/ckan \
     && chgrp -R 0 ${APP_DIR} /etc/ckan /var/lib/ckan \
