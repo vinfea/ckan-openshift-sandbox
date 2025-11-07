@@ -55,4 +55,9 @@ data:
   CKAN__HARVEST__MQ__HOSTNAME: "ckan-redis"
   CKAN__HARVEST__MQ__PORT: "6379"
   CKAN__HARVEST__MQ__REDIS_DB: "1"
+
+  # SSL
+  REQUESTS_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
+  CURL_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
+
   

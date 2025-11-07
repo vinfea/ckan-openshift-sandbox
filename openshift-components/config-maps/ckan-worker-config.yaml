@@ -59,3 +59,7 @@ data:
   # CKAN Worker
   CKAN_WORKER: "true"
   CKAN_WORKER_OPTS: "default"
+
+  # SSL
+  REQUESTS_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
+  CURL_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"

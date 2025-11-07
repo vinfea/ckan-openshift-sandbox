@@ -167,3 +167,15 @@ Things that call xloader_data_into_datastore(input):
 /srv/app/src/ckanext-xloader/ckanext/xloader/action.py
 /srv/app/src/ckanext-xloader/ckanext/xloader/command.py
 
+------------------------------------------------------------
+drwxrwsr-x. 1 ckan-sys root 68 Nov  7 19:11 app
+
+total 32
+-rw-rw-r--. 1 ckan-sys   root   650 May  7  2025 '=70.0.0'
+-rw-rw-r--. 1 1001020000 root 10729 Nov  7 19:11  ckan.ini
+drwxrwxr-x. 1 ckan-sys   root    31 Nov  5 20:48  patches
+-rw-rw-r--. 1 root       root  7942 Oct 28 18:13  prerun.py
+drwxr-sr-x. 2 1001020000 root    42 Nov  7 19:11  __pycache__
+drwxrwxr-x. 1 ckan       root    80 Oct 30 15:32  src
+-rw-rwxr--. 1 root       root  2391 Oct 28 19:51  start_ckan.sh
+-rw-rw-r--. 1 ckan-sys   root   582 Jan  1  1970  wsgi.py
