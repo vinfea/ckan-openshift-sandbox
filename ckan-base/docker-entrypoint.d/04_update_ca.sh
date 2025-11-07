@@ -1,5 +1,5 @@
 #!/bin/bash
-set -uo pipefail
+echo "[INFO] *********** Starting CA bundle script ***********"
 
 # Writable directory for the CA bundle
 LOCAL_CA_DIR="/srv/app/ca-certs"
