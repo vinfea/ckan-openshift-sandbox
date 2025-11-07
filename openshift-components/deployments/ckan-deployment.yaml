@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ckan
-          image: quay.io/incineroar/ckan-base:5.40c
+          image: quay.io/incineroar/ckan-base:5.4
           ports:
             - containerPort: 5000
           envFrom:
@@ -26,9 +26,6 @@ spec:
           volumeMounts:
             - name: ckan-storage
               mountPath: /var/lib/ckan
-            - name: ca-cert
-              mountPath: /srv/app
-              readOnly: true
           resources:
             requests:
               cpu: "250m"
@@ -40,9 +37,6 @@ spec:
         - name: ckan-storage
           persistentVolumeClaim:
             claimName: ckan-storage
-        - name: ca-cert
-          secret:
-            secretName: ca-cert
 
 ---
 

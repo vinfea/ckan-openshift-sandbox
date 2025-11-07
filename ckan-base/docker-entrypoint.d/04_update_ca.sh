@@ -1,26 +1,30 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
-# Directory where your CA certs are mounted (Secret)
-CA_MOUNT_DIR="/srv/app"
-
-# Directory where your container user can write the trust bundle
+# Writable directory for the CA bundle
 LOCAL_CA_DIR="/srv/app/ca-certs"
 LOCAL_CA_BUNDLE="${LOCAL_CA_DIR}/ca-bundle.crt"
 
 echo "[INFO] Creating local CA trust store..."
 
-# Make sure the local CA directory exists
-mkdir -p "${LOCAL_CA_DIR}"
+# Try to create directory, warn if it fails
+mkdir -p "${LOCAL_CA_DIR}" || echo "[WARN] Failed to create ${LOCAL_CA_DIR}, continuing..."
 
-# Copy all mounted CA certs into the local CA directory
-if [ -d "${CA_MOUNT_DIR}" ]; then
-    cp "${CA_MOUNT_DIR}"/*.pem "${LOCAL_CA_DIR}/"
+# Write the env var value to a PEM file if set
+if [ -n "${CKAN_CA_CERT:-}" ]; then
+    echo "${CKAN_CA_CERT}" > "${LOCAL_CA_DIR}/ckan-dev-ca.pem" || \
+        echo "[WARN] Failed to write CA certificate, continuing..."
 else
-    echo "[WARN] Mounted CA directory ${CA_MOUNT_DIR} not found. Skipping."
+    echo "[WARN] CKAN_CA_CERT env var not set."
 fi
 
-# Build a single CA bundle for Python / requests / curl
-cat "${LOCAL_CA_DIR}"/*.pem > "${LOCAL_CA_BUNDLE}"
+# Build the CA bundle, but don’t fail if no files exist
+if compgen -G "${LOCAL_CA_DIR}/*.pem" > /dev/null; then
+    cat "${LOCAL_CA_DIR}"/*.pem > "${LOCAL_CA_BUNDLE}" || \
+        echo "[WARN] Failed to create CA bundle, continuing..."
+    echo "[INFO] Local CA bundle created at ${LOCAL_CA_BUNDLE}"
+else
+    echo "[WARN] No PEM files found, skipping CA bundle creation."
+fi
 
-echo "[INFO] Local CA bundle created at ${LOCAL_CA_BUNDLE}"
+echo "[INFO] UPDATE SSL done..."
