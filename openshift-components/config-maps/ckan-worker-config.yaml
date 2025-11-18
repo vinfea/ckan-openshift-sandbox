@@ -9,15 +9,15 @@ data:
   NGINX_SSLPORT_HOST: "8443"
   
   # CKAN Databases
-  POSTGRES_HOST: "ckan-db"
-  CKAN_SQLALCHEMY_URL: "postgresql://ckandbuser:ckandbpassword@ckan-db/ckandb"
-  CKAN_DATASTORE_WRITE_URL: "postgresql://ckandbuser:ckandbpassword@ckan-db/datastore"
-  CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@ckan-db/datastore"
+  POSTGRES_HOST: "ckan-db-primary"
+  CKAN_SQLALCHEMY_URL: "postgresql://ckandbuser:ckandbpassword@ckan-db-primary.aafc-labs-can-dev.svc:5432/ckandb"
+  CKAN_DATASTORE_WRITE_URL: "postgresql://ckandbuser:ckandbpassword@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore"
+  CKAN_DATASTORE_READ_URL: "postgresql://datastore:datastore@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore"
 
   # Test Database Connections
-  TEST_CKAN_SQLALCHEMY_URL: "postgres://ckan:ckan@ckan-db/ckan_test"
-  TEST_CKAN_DATASTORE_WRITE_URL: "postgresql://ckan:ckan@ckan-db/datastore_test"
-  TEST_CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@ckan-db/datastore_test"
+  TEST_CKAN_SQLALCHEMY_URL: "postgresql://ckan:ckan@ckan-db-primary.aafc-labs-can-dev.svc:5432/ckan_test"
+  TEST_CKAN_DATASTORE_WRITE_URL: "postgresql://ckan:ckan@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore_test"
+  TEST_CKAN_DATASTORE_READ_URL: "postgresql://datastore:datastore@ckan-db-primary.aafc-labs-can-dev.svc:5432/datastore_test"
 
   # Dev Settings
   USE_HTTPS_FOR_DEV: "false"
@@ -26,7 +26,6 @@ data:
   CKAN_VERSION: "2.11.0"
   CKAN_SITE_ID: "default"
   CKAN_SITE_URL: "https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca"
-  CKAN_SERVICE_URL: "http://ckan:5000"
   CKAN___BEAKER__SESSION__SECRET: "CHANGE_ME"
   CKAN___API_TOKEN__JWT__ENCODE__SECRET: "string:CHANGE_ME"
   CKAN___API_TOKEN__JWT__DECODE__SECRET: "string:CHANGE_ME"
@@ -60,6 +59,7 @@ data:
   CKAN_WORKER: "true"
   CKAN_WORKER_OPTS: "default"
 
-  # SSL
+  # SSL (used by Python libraries)
   REQUESTS_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
   CURL_CA_BUNDLE: "/srv/app/ca-certs/ca-bundle.crt"
+  

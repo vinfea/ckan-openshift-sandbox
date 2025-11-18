@@ -21,11 +21,11 @@ DONE!!!
 
 The XLoader extension works by sending background jobs to the ckan-worker pod (this pod has the same image as the ckan webapp, but a different deployment)
 
-Goal 5) Full deployment on government dev namespace (allow scaling of stateful apps using operator)
+Goal 5) Full deployment on government dev namespace
 
-Goal 6) Add SDI configurations / patches / extensions
+Goal 6) Add Gov Canada theme
 
-Goal 7) Add Gov Canada theme
+Goal 7) Add SDI configurations / patches / extensions
 
 ----------------------------------------------------------------------------
 GOAL 1
@@ -121,61 +121,6 @@ Note that the command to build the ckan-base image should now include an additio
 GOAL 5 (Gov Cluster Deployment)
 ----------------------------------------------------------------------------
 
-SSL ISSUE
+Change ckan image and configurations to solve SSL cert issue.
 
-Command:
-echo | openssl s_client -showcerts -connect ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca:443 2>/dev/null | openssl x509 -noout -issuer -subject
-
-issuer=C=CA, O=GC, CN=GOC-GDC-ISSUING-A2B
-subject=C=CA, ST=Quebec, L=Gatineau, O=Environment and Climate Change Canada, CN=ocp-internal, emailAddress=ssc.datainterchangewebops-echangededonneeswebops.spc@ssc-spc.gc.ca
-
-echo | openssl s_client -showcerts -connect ckan-landorus-dev.apps.rm3.7wse.p1.openshiftapps.com:443 2>/dev/null | openssl x509 -noout -issuer -subject
-
-issuer=C=US, O=Let's Encrypt, CN=R13
-subject=CN=api.rm3.7wse.p1.openshiftapps.com
-
-
---------------------------------------------------------
-
-
-python -c "import requests; print(requests.get('http://ckan:5000', verify=True))"
-
-python -c "import requests; print(requests.get('https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca', verify=False))"
-
-
-/srv/app/src/ckanext-xloader/ckanext/xloader/jobs.py
-
-2025-11-03 22:03:46,312 INFO [ckan.lib.jobs] Added background job bdf9f002-1841-46bb-b0d1-c58a74ccb77f ("xloader_submit: package: 314b624c-f61b-49a1-bc04-54e61fc24406 resource: 56e6f821-cfd4-4e9a-9418-79525633532f") to queue "default"
-
-2025-11-03 22:03:46,312 INFO [ckan.lib.jobs] Added background job bdf9f002-1841-46bb-b0d1-c58a74ccb77f ("xloader_submit: package: 314b624c-f61b-49a1-bc04-54e61fc24406 resource: 56e6f821-cfd4-4e9a-9418-79525633532f") to queue "default"
-
-2025-11-03 22:03:46,312 DEBUG [ckanext.xloader.action] Enqueued xloader job=bdf9f002-1841-46bb-b0d1-c58a74ccb77f res_id=56e6f821-cfd4-4e9a-9418-79525633532f
-
-/srv/app/src/ckan/ckan/lib/jobs.py
-
-
-If you want to overwrite site_url:
-/srv/app/src/ckan/ckan/config/declaration/key.py has the line
-
-site_url = Key().ckan.site_url
-
-But, I would suggest maybe overwriting the xloader jobs.py file instead. In the input dictionary, instead of using site_url for the value of ckan_url, use some custom env variable.
-
-Things that call xloader_data_into_datastore(input):
-
-/srv/app/src/ckanext-xloader/ckanext/xloader/jobs.py
-/srv/app/src/ckanext-xloader/ckanext/xloader/action.py
-/srv/app/src/ckanext-xloader/ckanext/xloader/command.py
-
-------------------------------------------------------------
-drwxrwsr-x. 1 ckan-sys root 68 Nov  7 19:11 app
-
-total 32
--rw-rw-r--. 1 ckan-sys   root   650 May  7  2025 '=70.0.0'
--rw-rw-r--. 1 1001020000 root 10729 Nov  7 19:11  ckan.ini
-drwxrwxr-x. 1 ckan-sys   root    31 Nov  5 20:48  patches
--rw-rw-r--. 1 root       root  7942 Oct 28 18:13  prerun.py
-drwxr-sr-x. 2 1001020000 root    42 Nov  7 19:11  __pycache__
-drwxrwxr-x. 1 ckan       root    80 Oct 30 15:32  src
--rw-rwxr--. 1 root       root  2391 Oct 28 19:51  start_ckan.sh
--rw-rw-r--. 1 ckan-sys   root   582 Jan  1  1970  wsgi.py
+Use Crunchy Operator (already installed and useable on the dev namespace) for Postgres instead of regular Deployment. Gives scaling, backups, etc.

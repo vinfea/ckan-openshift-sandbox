@@ -69,3 +69,11 @@ Misc
 oc exec -it <pod> -- /bin/bash
 
 oc label deployment ckan app.kubernetes.io/part-of=ckan
+
+kubectl get secret ckan-db-pguser-ckandbuser -o go-template='{{.data.uri | base64decode}}'
+
+kubectl get secret ckan-db-pguser-datastore-ro -o go-template='{{.data.password | base64decode}}'
+
+SELECT datname, datacl
+FROM pg_database
+WHERE datacl::text LIKE '%datastore%';
