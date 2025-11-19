@@ -14,6 +14,28 @@ RUN pip3 install -U pip && \
     pip3 install -r ckanext-xloader/requirements.txt && \
     pip3 install -U requests[security]
 
+# Install Gov Canada Theme extensions
+
+# 1) Clone git repos
+RUN cd ${SRC_DIR} && \
+    git clone https://github.com/asc-csa/ckanext-asc-csa-scheming && \
+    git clone https://github.com/ckan/ckanext-fluent.git && \
+    git clone https://github.com/asc-csa/ckanext-asc-csa
+
+# 2) Install extensions
+RUN cd ${SRC_DIR}/ckanext-asc-csa-scheming && \
+    pip install -r requirements.txt && \
+    python setup.py develop 
+
+RUN cd ${SRC_DIR}/ckanext-fluent && \
+    python setup.py develop
+
+RUN cd ${SRC_DIR}/ckanext-asc-csa && \
+    python setup.py develop
+
+# 3) Apply custom Solr schema
+RUN cp ${SRC_DIR}/ckanext-asc-csa/ckanext/csa/conf/solr/schema.xml ${SRC_DIR}/ckan/ckan/config/solr/schema.xml
+
 # Install nano text editor
 RUN apt-get update && \
     apt-get install -y nano && \
