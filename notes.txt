@@ -136,3 +136,17 @@ Attempt to add the following extension to CKAN 2.11 (the extension is meant for 
 https://github.com/asc-csa/ckanext-asc-csa?tab=readme-ov-file
 
 Updated plugins in config map and changed Dockerfile for ckan-base.
+
+"/srv/app/src/ckanext-asc-csa/ckanext/csa/helpers.py", line 2, in <module>
+    from ckan.model import User, Package, Activity
+ImportError: cannot import name 'Activity' from 'ckan.model' (/srv/app/src/ckan/ckan/model/__init__.py)
+
+Command '['ckan', '-c', '/srv/app/ckan.ini', 'db', 'init']' returned non-zero exit status 1.
+
+File "/srv/app/src/ckanext-asc-csa/ckanext/csa/plugin.py", line 22, in <module>
+    import routes.mapper
+ModuleNotFoundError: No module named 'routes'
+
+File "/usr/local/lib/python3.10/site-packages/geojson/mapping.py", line 1, in <module>
+    from collections import MutableMapping
+ImportError: cannot import name 'MutableMapping' from 'collections' (/usr/local/lib/python3.10/collections/__init__.py)
