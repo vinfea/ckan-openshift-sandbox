@@ -23,6 +23,8 @@ The XLoader extension works by sending background jobs to the ckan-worker pod (t
 
 Goal 5) Full deployment on government dev namespace
 
+DONE!!!
+
 Goal 6) Add Gov Canada theme
 
 Goal 7) Add SDI configurations / patches / extensions
@@ -124,3 +126,13 @@ GOAL 5 (Gov Cluster Deployment)
 Change ckan image and configurations to solve SSL cert issue.
 
 Use Crunchy Operator (already installed and useable on the dev namespace) for Postgres instead of regular Deployment. Gives scaling, backups, etc.
+
+----------------------------------------------------------------------------
+GOAL 6 (Gov Canada Theme)
+----------------------------------------------------------------------------
+
+Attempt to add the following extension to CKAN 2.11 (the extension is meant for CKAN 2.9):
+
+https://github.com/asc-csa/ckanext-asc-csa?tab=readme-ov-file
+
+Updated plugins in config map and changed Dockerfile for ckan-base.
