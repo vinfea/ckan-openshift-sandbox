@@ -60,6 +60,15 @@ RUN mkdir -p ${APP_DIR} /etc/ckan /var/lib/ckan \
 
 RUN chmod g+rx ${APP_DIR}/start_ckan.sh
 
+# CSA extension permission changes
+RUN chgrp -R 0 /usr/local/lib/python3.10/site-packages/geojson \
+    && chmod -R g+rwX /usr/local/lib/python3.10/site-packages/geojson
+
+# Overwrite CSA files
+COPY gov-extension/helpers.py /srv/app/src/ckanext-asc-csa/ckanext/csa/helpers.py
+COPY gov-extension/plugin.py /srv/app/src/ckanext-asc-csa/ckanext/csa/plugin.py
+COPY gov-extension/mapping.py /usr/local/lib/python3.10/site-packages/geojson/mapping.py
+
 USER ckan
 
 RUN for d in $APP_DIR/patches/*; do \

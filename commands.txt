@@ -11,8 +11,8 @@ docker build -t ckan-base-image --build-arg XLOADER_VERSION=2.2.0 --build-arg TZ
 
 quay.io
 ----------------------------
-docker tag ckan-base-image quay.io/incineroar/ckan-base:5.0
-docker push quay.io/incineroar/ckan-base:5.0
+docker tag ckan-base-image quay.io/incineroar/ckan-base:6.0
+docker push quay.io/incineroar/ckan-base:6.0
 ----------------------------
 
 OpenShift
@@ -33,8 +33,8 @@ docker build -t ckan-base-image --build-arg XLOADER_VERSION=2.2.0 --build-arg TZ
 
 quay.io
 ----------------------------
-docker tag xloader-image quay.io/incineroar/ckan-base:3.0
-docker push quay.io/incineroar/ckan-base:3.0
+docker tag xloader-image quay.io/incineroar/ckan-base:6.0
+docker push quay.io/incineroar/ckan-base:6.0
 
 OpenShift
 ----------------------------
