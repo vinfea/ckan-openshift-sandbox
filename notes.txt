@@ -150,3 +150,39 @@ ModuleNotFoundError: No module named 'routes'
 File "/usr/local/lib/python3.10/site-packages/geojson/mapping.py", line 1, in <module>
     from collections import MutableMapping
 ImportError: cannot import name 'MutableMapping' from 'collections' (/usr/local/lib/python3.10/collections/__init__.py)
+
+def load_plugin_helpers() -> None:
+    """
+    (Re)loads the list of helpers provided by plugins.
+    """
+    global helper_functions
+
+    helper_functions.clear()
+    helper_functions.update(_builtin_functions)
+    chained_helpers = defaultdict(list)
+
+    for plugin in p.PluginImplementations(p.ITemplateHelpers):
+        for name, func in plugin.get_helpers().items():
+            if _is_chained_helper(func):
+                chained_helpers[name].append(func)
+            else:
+                helper_functions[name] = func
+    for name, func_list in chained_helpers.items():
+        if name not in helper_functions:
+            raise logic.NotFound(
+                u'The helper %r is not found for chained helper' % (name))
+        for func in reversed(func_list):
+            new_func = functools.partial(
+                func, helper_functions[name])
+            # persisting attributes to the new partial function
+            for attribute, value in func.__dict__.items():
+                setattr(new_func, attribute, value)
+            helper_functions[name] = new_func
+
+/srv/app/src/ckanext-fluent/ckanext/fluent/helpers.py:69:def scheming_missing_required_fields(
+/srv/app/src/ckanext-fluent/ckanext/fluent/plugins.py:23:            'scheming_missing_required_fields':
+/srv/app/src/ckanext-fluent/ckanext/fluent/plugins.py:24:                helpers.scheming_missing_required_fields,
+
+
+/srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/helpers.py
+/srv/app/src/ckanext-asc-csa/ckanext/csa/helpers.py
