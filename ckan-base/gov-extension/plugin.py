@@ -137,6 +137,14 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
     def after_search(self, search_results, search_params):
         return search_results
 
+    # IPackageController required for CKAN 2.11 chained helpers
+    def before_dataset_search(self, data_dict):
+        """Called before a dataset search query is executed."""
+        return self.before_search(data_dict)
+
+    def after_dataset_search(self, search_results, search_params):
+        """Called after a dataset search query is executed."""
+        return self.after_search(search_results, search_params)
 
 
     #Before index runs before SOLR does an index/reindex

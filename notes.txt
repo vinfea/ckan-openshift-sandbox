@@ -186,3 +186,8 @@ def load_plugin_helpers() -> None:
 
 /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/helpers.py
 /srv/app/src/ckanext-asc-csa/ckanext/csa/helpers.py
+
+
+File "/usr/local/lib/python3.10/site-packages/webassets/bundle.py", line 853, in <lambda>
+gs = lambda p: os.stat(p).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '/srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/GCWeb/css/theme.min.css'
