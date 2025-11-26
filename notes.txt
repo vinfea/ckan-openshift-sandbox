@@ -191,3 +191,7 @@ def load_plugin_helpers() -> None:
 File "/usr/local/lib/python3.10/site-packages/webassets/bundle.py", line 853, in <lambda>
 gs = lambda p: os.stat(p).st_mtime
 FileNotFoundError: [Errno 2] No such file or directory: '/srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/GCWeb/css/theme.min.css'
+
+File "/srv/app/src/ckan/ckan/model/license.py", line 98, in load_licenses
+with open(license_url.replace('file://', ''), 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/usr/lib/ckan/default/src/ckanext-asc-csa/ckanext/csa/public/licenses.json'
