@@ -195,3 +195,6 @@ FileNotFoundError: [Errno 2] No such file or directory: '/srv/app/src/ckanext-as
 File "/srv/app/src/ckan/ckan/model/license.py", line 98, in load_licenses
 with open(license_url.replace('file://', ''), 'r') as f:
 FileNotFoundError: [Errno 2] No such file or directory: '/usr/lib/ckan/default/src/ckanext-asc-csa/ckanext/csa/public/licenses.json'
+
+
+cp -r /srv/app/src/ckanext-asc-csa/ckanext/csa/public/* /srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/

@@ -70,6 +70,8 @@ COPY gov-extension/plugin.py /srv/app/src/ckanext-asc-csa/ckanext/csa/plugin.py
 COPY gov-extension/mapping.py /usr/local/lib/python3.10/site-packages/geojson/mapping.py
 COPY gov-extension/helpers-scheming.py /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/helpers.py
 
+RUN cp -r /srv/app/src/ckanext-asc-csa/ckanext/csa/public/* /srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/
+
 USER ckan
 
 RUN for d in $APP_DIR/patches/*; do \
