@@ -198,3 +198,29 @@ FileNotFoundError: [Errno 2] No such file or directory: '/usr/lib/ckan/default/s
 
 
 cp -r /srv/app/src/ckanext-asc-csa/ckanext/csa/public/* /srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/
+
+File "/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/page.html", line 26, in block 'flash_inner'
+{% for message in h.flash.pop_messages() | list %}
+File "/usr/local/lib/python3.10/site-packages/jinja2/utils.py", line 92, in from_obj
+if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'function object' has no attribute 'pop_messages'
+
+grep -R "pop_messages" /srv/app/src/ckanext-asc-csa/ckanext/csa/templates/
+
+/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/error_document_template.html:  {% set flash_messages = h.flash.pop_messages() %}
+/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/page.html:                {% for message in h.flash.pop_messages() | list %}
+
+File "/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/page.html", line 23, in block 'main_content'
+{% block flash %}
+File "/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/error_document_template.html", line 29, in block 'flash'
+{% set flash_messages = h.pop_flash_messages() %}
+File "/usr/local/lib/python3.10/site-packages/jinja2/utils.py", line 92, in from_obj
+if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'function object' has no attribute 'pop_messages'
+
+File "/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/error_document_template.html", line 29, in block 'flash'
+{% set flash_messages = h.pop_flash_messages() %}
+File "/usr/local/lib/python3.10/site-packages/jinja2/utils.py", line 92, in from_obj
+if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'function object' has no attribute 'pop_messages'
+2025-11-27 17:51:16,163 INFO [ckan.config.middleware.flask_app] 304 /favicon.ico render time 0.003 seconds
