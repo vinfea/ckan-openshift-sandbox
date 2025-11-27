@@ -26,5 +26,5 @@
 
 {% block flash %}
   {# eat the flash messages caused by the 404 #}
-  {% set flash_messages = h.pop_flash_messages() %}
+  {% set flash_messages = h.get_flashed_messages(with_categories=True) %}
 {% endblock %}
