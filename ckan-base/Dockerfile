@@ -71,7 +71,7 @@ COPY gov-extension/mapping.py /usr/local/lib/python3.10/site-packages/geojson/ma
 COPY gov-extension/helpers-scheming.py /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/helpers.py
 COPY gov-extension/error_document_template.html /srv/app/src/ckanext-asc-csa/ckanext/csa/templates/error_document_template.html
 COPY gov-extension/page.html /srv/app/src/ckanext-asc-csa/ckanext/csa/templates/page.html
-COPY gov-extension/ckan_dataset.json /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/ckan_dataset.json
+COPY gov-extension/plugins-scheming.py /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/plugins.py
 
 RUN cp -r /srv/app/src/ckanext-asc-csa/ckanext/csa/public/* /srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/
 
