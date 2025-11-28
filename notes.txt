@@ -223,4 +223,40 @@ File "/srv/app/src/ckanext-asc-csa/ckanext/csa/templates/error_document_template
 File "/usr/local/lib/python3.10/site-packages/jinja2/utils.py", line 92, in from_obj
 if hasattr(obj, "jinja_pass_arg"):
 jinja2.exceptions.UndefinedError: 'function object' has no attribute 'pop_messages'
-2025-11-27 17:51:16,163 INFO [ckan.config.middleware.flask_app] 304 /favicon.ico render time 0.003 seconds
+2025-11-27 17:51:16,163 INFO [ckan.config.middleware.flask_app] 304 /favicon.ico render time 0.003 
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM
+
+ckanapi action organization_create \
+  -c $CKAN_INI \
+  name=shadow_army \
+  title="SHADOW ARMY" \
+  --user=ckan_admin \
+  --apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM
+
+ckanapi action organization_create \
+  name=shadow_army \
+  title="SHADOW ARMY" \
+  -c $CKAN_INI \
+  -u ckan_admin \
+  -a eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM
+
+
+curl -X POST \
+  -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "draw_sword_guild", "title": "Draw Sword Guild"}' \
+  https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca/api/3/action/organization_create
+
+
+curl -X POST \
+  -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "name": "pokemon",
+        "title": "Pokemon!",
+        "owner_org": "shadow_army",
+        "notes": "A minimal dataset created via API (gotta catch em all)"
+      }' \
+  https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca/api/3/action/package_create
