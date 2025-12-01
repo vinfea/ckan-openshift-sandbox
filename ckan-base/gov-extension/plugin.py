@@ -103,23 +103,13 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
             # watch_file(p)
             return loader.load(open(p))
 
-    #IpackageController
-    def before_dataset_create(self, context, data_dict):
-        return
-    
+    #IpackageController   
     def after_dataset_create(self, context, data_dict):
         # No-op, but required by IPackageController
-        return
-    
-    def before_dataset_update(self, context, data_dict):
         return
 
     def after_dataset_update(self, context, data_dict):
         return
-    
-    def before_dataset_delete(self, context, data_dict):
-        # Called before a dataset is deleted
-        pass
 
     def after_dataset_delete(self, context, data_dict):
         # Called after a dataset is deleted
@@ -128,7 +118,6 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
     def after_dataset_show(self, context, data_dict):
         # No-op, required by IPackageController
         return
-    
     
     def before_search(self, search_params):
         u'''Extensions will receive a dictionary with the query parameters,
@@ -212,12 +201,8 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
         self.pkg_dict = pkg_dict
 
         return pkg_dict
-    
-    def after_dataset_index(self, dataset_dict):
-        """Called after a dataset is indexed in the search backend"""
-        return dataset_dict
 
-    def before_view(self, pkg_dict):
+    def before_dataset_view(self, pkg_dict):
         print('RAN before_view')
         return pkg_dict
 
@@ -232,18 +217,6 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
 
     def delete(self, entity):
         return entity
-
-    def after_create(self, context, pkg_dict):
-        return pkg_dict
-
-    def after_update(self, context, pkg_dict):
-        return pkg_dict
-
-    def after_delete(self, context, pkg_dict):
-        return pkg_dict
-
-    def after_show(self, context, pkg_dict):
-        return pkg_dict
 
     def get_pkg_dict(self):
         return self.pkg_dict
