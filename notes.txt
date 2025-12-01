@@ -397,3 +397,39 @@ def convert(converter: Callable[..., Any], key: FlattenKey,
     except Invalid as e:
         errors[key].append(e.error)
         return
+
+curl -X POST \
+  -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "pokemon",
+    "title": "Pokemon!",
+    "owner_org": "shadow_army",
+    "notes": "A minimal dataset created via API (gotta catch em all)",
+
+    "collection": "publication",
+    "date_published": "2025-01-30",
+    "frequency": "as_needed",
+    "imso_approval": "true",
+    "jurisdiction": "federal",
+
+    "keywords": {"en": ["OGIP"], "fr": ["PMOGO"]},
+
+    "license_id": "open-government-licence-canada",
+
+    "notes_translated-en": "English description",
+    "notes_translated-fr": "Description en français",
+
+    "project": ["unlisted"],
+
+    "ready_to_publish": "false",
+    "restrictions": "unrestricted",
+
+    "subject": ["information_and_communications"],
+
+    "title_translated-en": "Pokemon!",
+    "title_translated-fr": "Pokémon!"
+  }' \
+  https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca/api/3/action/package_create
+
+{'collection': ['Missing value'], 'date_published': ['Missing value'], 'frequency': ['Missing value'], 'imso_approval': ['Missing value'], 'jurisdiction': ['Missing value'], 'keywords-en': ['Missing value'], 'keywords-fr': ['Missing value'], 'license_id': ['Missing value'], 'project': ['Select at least one'], 'ready_to_publish': ['Missing value'], 'restrictions': ['Missing value'], 'subject': ['Select at least one'], '__type': 'Validation Error'}

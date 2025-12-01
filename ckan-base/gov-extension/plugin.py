@@ -104,6 +104,10 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
             return loader.load(open(p))
 
     #IpackageController
+    def after_dataset_create(self, context, data_dict):
+        # No-op, but required by IPackageController
+        return
+    
     def before_search(self, search_params):
         u'''Extensions will receive a dictionary with the query parameters,
         and should return a modified (or not) version of it.
