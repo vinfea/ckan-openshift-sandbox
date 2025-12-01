@@ -104,9 +104,31 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
             return loader.load(open(p))
 
     #IpackageController
+    def before_dataset_create(self, context, data_dict):
+        return
+    
     def after_dataset_create(self, context, data_dict):
         # No-op, but required by IPackageController
         return
+    
+    def before_dataset_update(self, context, data_dict):
+        return
+
+    def after_dataset_update(self, context, data_dict):
+        return
+    
+    def before_dataset_delete(self, context, data_dict):
+        # Called before a dataset is deleted
+        pass
+
+    def after_dataset_delete(self, context, data_dict):
+        # Called after a dataset is deleted
+        pass
+    
+    def after_dataset_show(self, context, data_dict):
+        # No-op, required by IPackageController
+        return
+    
     
     def before_search(self, search_params):
         u'''Extensions will receive a dictionary with the query parameters,
