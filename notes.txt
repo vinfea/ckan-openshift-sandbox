@@ -260,3 +260,140 @@ curl -X POST \
         "notes": "A minimal dataset created via API (gotta catch em all)"
       }' \
   https://ckan-aafc-labs-can-dev.apps.edcm-science-ocp-ops1.science.gc.ca/api/3/action/package_create
+
+
+
+def validate(
+    data: dict[str, Any],
+    schema: dict[str, Any],
+    context: Optional[Context] = None
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    '''Validate an unflattened nested dict against a schema.'''
+    context = context or {}
+
+    assert isinstance(data, dict)
+
+    # store any empty lists in the data as they will get stripped out by
+    # the _validate function. We do this so we can differentiate between
+    # empty fields and missing fields when doing partial updates.
+    empty_lists = [key for key, value in data.items() if value == []]
+
+    # create a copy of the context which also includes the schema keys so
+    # they can be used by the validators
+    validators_context = Context(context, schema_keys=list(schema.keys()))
+
+    flattened = flatten_dict(data)
+    flat_data, errors = _validate(flattened, schema, validators_context)
+    converted_data = unflatten(flat_data)
+
+    # repopulate the empty lists
+    for key in empty_lists:
+        if key not in converted_data:
+            converted_data[key] = []
+
+    errors_unflattened = unflatten(errors)
+
+    # remove validators that passed
+    dicts_to_process = [errors_unflattened]
+    while dicts_to_process:
+        dict_to_process = dicts_to_process.pop()
+        dict_to_process_copy = copy.copy(dict_to_process)
+        for key, value in dict_to_process_copy.items():
+            if not value:
+                dict_to_process.pop(key)
+                continue
+            if isinstance(value[0], dict):
+                dicts_to_process.extend(value)
+
+    _remove_blank_keys(errors_unflattened)
+
+    return converted_data, errors_unflattened
+
+
+def _validate(
+        data: FlattenDataDict, schema: Schema,
+        context: Context) -> tuple[FlattenDataDict, FlattenErrorDict]:
+    '''validate a flattened dict against a schema'''
+    converted_data = augment_data(data, schema)
+    full_schema = make_full_schema(data, schema)
+
+    errors: FlattenErrorDict = dict(
+        (key, []) for key in full_schema)
+
+    # before run
+    for key in sorted(full_schema, key=flattened_order_key):
+        if key[-1] == '__before':
+            for converter in full_schema[key]:
+                try:
+                    convert(converter, key, converted_data, errors, context)
+                except StopOnError:
+                    break
+
+    # main run
+    for key in sorted(full_schema, key=flattened_order_key):
+        if not key[-1].startswith('__'):
+            for converter in full_schema[key]:
+                try:
+                    convert(converter, key, converted_data, errors, context)
+                except StopOnError:
+                    break
+
+    # extras run
+    for key in sorted(full_schema, key=flattened_order_key):
+        if key[-1] == '__extras':
+            for converter in full_schema[key]:
+                try:
+                    convert(converter, key, converted_data, errors, context)
+                except StopOnError:
+                    break
+
+    # after run
+    for key in reversed(sorted(full_schema, key=flattened_order_key)):
+        if key[-1] == '__after':
+            for converter in full_schema[key]:
+                try:
+                    convert(converter, key, converted_data, errors, context)
+                except StopOnError:
+                    break
+
+    # junk
+    if ('__junk',) in full_schema:
+        for converter in full_schema[('__junk',)]:
+            try:
+                convert(converter, ('__junk',), converted_data, errors,
+                        context)
+            except StopOnError:
+                break
+
+    return converted_data, errors
+
+
+def convert(converter: Callable[..., Any], key: FlattenKey,
+            converted_data: FlattenDataDict,
+            errors: FlattenErrorDict, context: Context
+            ) -> None:
+    try:
+        nargs = converter.__code__.co_argcount
+    except AttributeError:
+        raise TypeError(
+            f"{converter.__name__} cannot be used as validator "
+            "because it is not a user-defined function")
+    if nargs == 1:
+        params = (converted_data.get(key),)
+    elif nargs == 2:
+        params = (converted_data.get(key), context)
+    elif nargs == 4:
+        params = (key, converted_data, errors, context)
+    else:
+        raise TypeError(
+            "Wrong number of arguments for "
+            f"{converter.__name__}(expected 1, 2 or 4): {nargs}")
+    try:
+        value = converter(*params)
+        # 4-args version sets value internally
+        if nargs != 4:
+            converted_data[key] = value
+        return
+    except Invalid as e:
+        errors[key].append(e.error)
+        return
