@@ -178,7 +178,7 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
     #Must also edit schema.xml for these changes to help
 
     #Implements bilingual searching
-    def before_index(self, pkg_dict):
+    def before_dataset_index(self, pkg_dict):
 
         print('RAN before_index')
 
@@ -212,6 +212,10 @@ class CsaPlugin(p.SingletonPlugin, DefaultTranslation):
         self.pkg_dict = pkg_dict
 
         return pkg_dict
+    
+    def after_dataset_index(self, dataset_dict):
+        """Called after a dataset is indexed in the search backend"""
+        return dataset_dict
 
     def before_view(self, pkg_dict):
         print('RAN before_view')

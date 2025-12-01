@@ -402,7 +402,7 @@ curl -X POST \
   -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJ6UThOYXdHeDE0YUVkdmRFc01wRmg0VFZpbm44dG9SQzhla3A3Ujd2cUJFIiwiaWF0IjoxNzY0Mjc4NDczfQ.te_fps3JZjwgsYdFZIfiVU5rWP0YXbC29qWcg73cofM" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "pokemon",
+    "name": "list-of-grievances",
     "title": "Pokemon!",
     "owner_org": "shadow_army",
     "notes": "A minimal dataset created via API (gotta catch em all)",
@@ -426,6 +426,8 @@ curl -X POST \
     "restrictions": "unrestricted",
 
     "subject": ["information_and_communications"],
+
+    "private": false,
 
     "title_translated-en": "Pokemon!",
     "title_translated-fr": "Pokémon!"
