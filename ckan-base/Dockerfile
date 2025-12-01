@@ -72,6 +72,7 @@ COPY gov-extension/helpers-scheming.py /srv/app/src/ckanext-asc-csa-scheming/cka
 COPY gov-extension/error_document_template.html /srv/app/src/ckanext-asc-csa/ckanext/csa/templates/error_document_template.html
 COPY gov-extension/page.html /srv/app/src/ckanext-asc-csa/ckanext/csa/templates/page.html
 COPY gov-extension/ckan_dataset.json /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/ckan_dataset.json
+COPY gov-extension/presets.json /srv/app/src/ckanext-asc-csa-scheming/ckanext/scheming/presets.json
 
 RUN cp -r /srv/app/src/ckanext-asc-csa/ckanext/csa/public/* /srv/app/src/ckanext-asc-csa/ckanext/csa/fanstatic/
 
