@@ -49,7 +49,7 @@ data:
   NGINX_SSLPORT: "443"
 
   # Extensions
-  CKAN__PLUGINS: "image_view text_view datatables_view csa scheming_datasets fluent datastore envvars"
+  CKAN__PLUGINS: "image_view text_view datatables_view datastore envvars"
   CKAN__HARVEST__MQ__TYPE: "redis"
   CKAN__HARVEST__MQ__HOSTNAME: "ckan-redis"
   CKAN__HARVEST__MQ__PORT: "6379"
